@@ -28,11 +28,16 @@
     </nav>
 
     <main>
-        <div>
+        <div id="button_chart_division">
+            <div>
             <input type="text" id="cityInput" placeholder="Enter city">
             <button id="weatherButton" onclick="getWeather()">Get Weather</button>
+            </div>
+            <div id="space">
+                <canvas id="weatherChart" width="400" height="200"></canvas>
+            </div>
         </div>
-        <canvas id="weatherChart" width="400" height="200"></canvas>
+        
     </main>
 
     <footer>

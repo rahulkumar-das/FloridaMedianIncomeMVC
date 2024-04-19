@@ -174,7 +174,12 @@ img {
     width: 900px; /* Set a standard width for images */
     max-height: 600px; /* Set a maximum height for images */
     object-fit: cover; /* Ensure images maintain aspect ratio while covering the container */
+    transition: transform 0.3s ease;
 }
+
+ img:hover {
+      transform: scale(1.1); /* Increase size on hover */
+    }
 
 /* Additional class for container */
 .container {
@@ -376,4 +381,13 @@ footer {
     #cityInput:focus {
         outline: none;
         border-color: #333;
+    }
+
+    #button_chart_division{
+        display:flex !important;
+        flex-direction:column;
+    }
+
+    #space{
+        padding-top:105px;
     }
