@@ -32,7 +32,7 @@
             <input type="text" id="cityInput" placeholder="Enter city">
             <button id="weatherButton" onclick="getWeather()">Get Weather</button>
         </div>
-        <canvas id="weatherChart"></canvas>
+        <canvas id="weatherChart" width="400" height="200"></canvas>
     </main>
 
     <footer>
@@ -43,27 +43,33 @@
         function getWeather() {
             const city = document.getElementById('cityInput').value;
 
-            // Use AJAX to fetch data from the server
-            fetch(`@Url.Action("GetWeather", "Weather")`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ city: city })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const temperature = data.temperature;
-                const humidity = data.humidity;
+            // Your OpenWeatherMap API key
+            const apiKey = 'bd5e378503939ddaee76f12ad7a97608'; // Replace 'your_api_key_here' with your actual API key
 
-                // Update the chart with the fetched data
-                updateChart(temperature, humidity);
+            // Create the URL by appending the city as a query parameter
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+            // Use fetch to send a GET request to the server
+            fetch(apiUrl, {
+                method: 'GET', // Use GET since we're sending the city as a query parameter
             })
-            .catch(error => {
-                console.error('Error fetching weather data:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const temperature = data.main.temp;
+                    const humidity = data.main.humidity;
+
+                    // Update the chart with the fetched data
+                    updateChart(temperature, humidity);
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
         }
 
+
+       
+        
+        
         function updateChart(temperature, humidity) {
             const ctx = document.getElementById('weatherChart').getContext('2d');
 
@@ -93,6 +99,8 @@
                 },
                 options: {
                     indexAxis: 'y',
+                    responsive: true, // Allows the chart to resize based on container size
+                    maintainAspectRatio: false, // Set to false to control aspect ratio independently
                     scales: {
                         y: {
                             beginAtZero: true
