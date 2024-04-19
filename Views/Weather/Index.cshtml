@@ -1,0 +1,106 @@
+﻿<!-- Views/Weather/Index.cshtml -->
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Weather Dashboard using WeatherAPI</h1>
+    </header>
+    <nav>
+        <a href="~/index.html">Home</a> |
+        <a href="~/about.html">About Us</a>
+    </nav>
+
+    <main>
+        <div>
+            <input type="text" id="cityInput" placeholder="Enter city">
+            <button id="weatherButton" onclick="getWeather()">Get Weather</button>
+        </div>
+        <canvas id="weatherChart"></canvas>
+    </main>
+
+    <footer>
+        <a href="contact.html">Contact Us</a>
+    </footer>
+
+    <script>
+        function getWeather() {
+            const city = document.getElementById('cityInput').value;
+
+            // Use AJAX to fetch data from the server
+            fetch(`@Url.Action("GetWeather", "Weather")`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ city: city })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const temperature = data.temperature;
+                const humidity = data.humidity;
+
+                // Update the chart with the fetched data
+                updateChart(temperature, humidity);
+            })
+            .catch(error => {
+                console.error('Error fetching weather data:', error);
+            });
+        }
+
+        function updateChart(temperature, humidity) {
+            const ctx = document.getElementById('weatherChart').getContext('2d');
+
+            // Destroy existing chart instance if it exists
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+
+            // Create new chart instance
+            window.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Temperature', 'Humidity'],
+                    datasets: [{
+                        label: 'Weather Data',
+                        data: [temperature, humidity],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

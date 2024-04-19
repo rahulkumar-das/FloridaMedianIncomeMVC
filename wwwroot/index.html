@@ -1,0 +1,74 @@
+﻿<!--This is the first page that user seees-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida County Median Income</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        //adding again Adding 5th task - Ankita Singh assignment
+        // Function to navigate to county.html with selected county
+        function goToCounty() {
+            var county = document.getElementById("countySelect").value;
+            window.location.href = "county.html?county=" + county;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Florida County Median Income</h1>
+    </header>
+    <nav>
+        <a href="about.html">About Us</a> |
+        <a href="Weather">Weather Dashboard using API</a>
+    </nav>
+
+    <main>
+        <section>
+            <p>Welcome to our website! Select a county from the dropdown to view its median household income:</p>
+            <select id="countySelect">
+                <option value="hillsborough">Hillsborough</option>
+                <option value="sarasota">Sarasota</option>
+                <option value="charlotte">Charlotte</option>
+                <option value="orange">Orange</option>
+                <option value="miami_dade">Miami-Dade</option>
+                <option value="palm_beach">Palm Beach</option>
+                <option value="pinellas">Pinellas</option>
+                <option value="duval">Duval</option>
+            </select>
+
+            <button onclick="goToCounty()">Go</button>
+        </section>
+
+        <section id="populationData">
+            <!-- Population chart will be displayed here -->
+            <h2>Population by County</h2>
+            <div class="chartContainer">
+                <canvas id="populationChart"></canvas>
+            </div>
+            <p>This chart displays the population for each county in 2023.</p>
+        </section>
+
+        <section>
+            <h2>About Florida</h2>
+            <p>Florida is a state located in the southeastern region of the United States. It is bordered to the west by the Gulf of Mexico, to the northwest by Alabama, to the north by Georgia, to the east by the Atlantic Ocean, and to the south by the Straits of Florida. Florida is the 22nd-most extensive, the 3rd-most populous, and the 8th-most densely populated of the U.S. states.</p>
+            <h3>Images of Florida</h3>
+            <div class="imageGallery">
+                <img src="images/florida1.jpg" alt="Florida 1">
+                <img src="images/florida2.jpg" alt="Florida 2">
+                <img src="images/florida3.jpg" alt="Florida 3">
+                <img src="images/florida4.jpg" alt="Florida 4">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p><a href="contact.html">Contact Us</a></p>
+    </footer>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include your populationChart.js file -->
+    <script src="js\populationchart.js"></script>
+</body>
+</html>
